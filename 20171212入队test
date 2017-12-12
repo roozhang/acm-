@@ -1,0 +1,60 @@
+DDDDDDDDDDDDDDDDDDDDDDD
+
+#include <iostream>
+#include <string>
+#include <map>
+#include <vector>
+using namespace std;
+const string chg="2223334445556667 77888999 ";
+int main()
+{
+    int n;
+    cin>>n;
+    int m=n*7;
+    string str;
+    for(int i = 0;i<m;){
+        char c;
+        cin>>c;
+        if(c=='\n'||c=='-'){
+
+        }
+        else if(c>='0'&&c<='9'){
+            str.push_back(c);
+            i++;
+        }
+        else if(c>='A'&&c<='Y'&&c!='Q'){
+            str.push_back(chg[c-'A']);
+            i++;
+        }
+        else{
+
+        }
+    }
+    vector<string> vec(n);
+    for(int i = 0;i<n;i++){
+        for(int j= 0;j<7;j++){
+            vec[i].push_back(str[7*i+j]);
+        }
+    }
+
+
+    map<string,int> mapmap;
+    for(int i = 0;i<n;i++){
+        mapmap.insert( {vec[i],-1} );
+        if(mapmap[vec[i]]==-1){
+            mapmap[vec[i]]=1;
+        }
+        else{
+                mapmap[vec[i]]++;
+        }
+    }
+    for(auto k:mapmap){
+        if(k.second!=1){
+            string ans=k.first;
+            cout<<ans[0]<<ans[1]<<ans[2]<<"-"<<ans[3]<<ans[4]<<ans[5]<<ans[6]<<" "<<k.second<<endl;
+        }
+
+    }
+
+    return 0;
+}
