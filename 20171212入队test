@@ -1,4 +1,4 @@
-DDDDDDDDDDDDDDDDDDDDDDD
+poj1002
 
 #include <iostream>
 #include <string>
@@ -58,3 +58,155 @@ int main()
 
     return 0;
 }
+************************************8
+//苦于超时
+#include <iostream>
+#include <string>
+#include <map>
+#include <vector>
+using namespace std;
+const string chg="2223334445556667 77888999 ";
+int main()
+{
+    int n;
+    cin>>n;
+    string str;
+    vector<string> vec;
+        char c;
+        while(cin>>c){
+            if(c>='0'&&c<='9'){
+                str.push_back(c);
+            }
+            else if(c>='A'&&c<='Y'&&c!='Q'){
+                str.push_back(chg[c-'A']);
+            }
+            if(str.length()==7){
+                vec.push_back(str);
+                str.clear();
+            }
+        }
+
+    map<string,int> mapmap;
+    for(int i = 0;i<n;i++){
+        mapmap.insert({vec[i],0});
+        if(mapmap[vec[i]]==0){
+            mapmap[vec[i]]=1;
+        }
+        else{
+                mapmap[vec[i]]++;
+        }
+    }
+    map<string,int>::iterator iter;
+    for(iter=mapmap.begin();iter!=mapmap.end();iter++) {
+        if(iter->second!=1){
+            string ans=iter->first;
+            cout<<ans[0]<<ans[1]<<ans[2]<<"-"<<ans[3]<<ans[4]<<ans[5]<<ans[6]<<" "<<iter->second<<endl;
+        }
+
+    }
+
+    return 0;
+}
+************************************************继续改
+//尝试直接用vector来试试，不用map
+#include <iostream>
+#include <string>
+//#include <map>
+#include <vector>
+#include <algorithm>
+using namespace std;
+const string chg="2223334445556667 77888999 ";
+
+int main()
+{
+    int n;
+    cin>>n;
+    string str;
+    vector<string> vec;
+    char c;
+    while(cin>>c){
+        if(c>='0'&&c<='9'){
+            str.push_back(c);
+        }
+        else if(c>='A'&&c<='Y'&&c!='Q'){
+            str.push_back(chg[c-'A']);
+        }
+        if(str.length()==7){
+            vec.push_back(str);
+            str.clear();
+        }
+    }
+
+    sort(vec.begin(),vec.end());
+    int cont = 1;
+    auto iter=vec.begin();
+    while(iter!=vec.end()){
+
+        if(*iter==*(iter+1)){
+            cont++;
+            iter++;
+        }
+        else{
+            string str1=*iter;
+            if(cont>1){
+                cout<<str1[0]<<str1[1]<<str1[2]<<"-"<<str1[3]<<str1[4]<<str1[5]<<str1[6]<<" "<<cont<<endl;
+                cont=1;
+            }
+            iter++;
+        }
+    }
+    return 0;
+}
+***************************************输出正确答案之后就崩了你敢信，ce
+不出所料，145行溢出。。改143vec.end()为vec.end()-1就行了。
+#include <iostream>
+#include <string>
+//#include <map>
+#include <vector>
+#include <algorithm>
+using namespace std;
+const string chg="2223334445556667 77888999 ";
+
+int main()
+{
+    int n;
+    cin>>n;
+    string str;
+    vector<string> vec;
+    char c;
+
+    while(cin>>c){
+        if(c>='0'&&c<='9'){
+            str.push_back(c);
+        }
+        else if(c>='A'&&c<='Y'&&c!='Q'){
+            str.push_back(chg[c-'A']);
+        }
+        if(str.length()==7){
+            vec.push_back(str);
+            str.clear();
+        }
+
+    }
+
+    sort(vec.begin(),vec.end());
+    int cont = 1;
+    vector<string>::iterator iter=vec.begin();
+    while(iter!=vec.end()-1){
+
+        if(*iter==*(iter+1)){
+            cont++;
+            iter++;
+        }
+        else{
+            string str1=*iter;
+            if(cont>1){
+                cout<<str1[0]<<str1[1]<<str1[2]<<"-"<<str1[3]<<str1[4]<<str1[5]<<str1[6]<<" "<<cont<<endl;
+                cont=1;
+            }
+            iter++;
+        }
+    }
+    return 0;
+}
+**********************wa,,,,我真是日了poj1002了。。。。难受。。
